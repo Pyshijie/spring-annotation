@@ -1,6 +1,7 @@
 package com.ishijie;
 
 import org.example.config.SpringConfig;
+import org.example.config.SpringConfigOfLifeCycle;
 import org.example.entity.Person;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -19,6 +20,24 @@ import java.util.Arrays;
  *@Version: 1.0
  */
 public class test {
+
+    @Test
+    public void test05(){
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfigOfLifeCycle.class);
+        applicationContext.close();
+    }
+
+
+    @Test
+    public void test04(){
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfig.class);
+        Arrays.stream(applicationContext.getBeanDefinitionNames()).forEach(System.out::println);
+
+        Object redFactoryBean = applicationContext.getBean("redFactoryBean");
+        Object redFactoryBean2 = applicationContext.getBean("redFactoryBean");
+        System.out.println("redFactoryBean.getClass() = " + redFactoryBean.getClass());
+        System.out.println(redFactoryBean == redFactoryBean2);
+    }
 
 
     @Test

@@ -4,6 +4,7 @@ import org.example.condition.LinuxCondition;
 import org.example.condition.WindowsCondition;
 import org.example.entity.Book;
 import org.example.entity.Person;
+import org.example.entity.RedFactoryBean;
 import org.example.type_filter.MyTypeFilter;
 import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -46,7 +47,20 @@ import org.springframework.stereotype.Service;
 *
 * 注意： 需要取消@ComponentScan的默认过滤器，这样我们配置的这些过滤器才能生效  useDefaultFilters = false
 * */
-@Import(value = {Book.class}) //快速导入Book组件,在容器默认的名字为类的全类名
+// @Configuration, ImportSelector, ImportBeanDefinitionRegistrar, or regular component classes
+//@Import(value = {Book.class}) //快速导入Book组件,在容器默认的名字为类的全类名
+// 使用ImportSelector来选择性导入组件
+/*
+    ImportSelector
+* Select and return the names of which class(es) should be imported based on the AnnotationMetadata of the   importing @Configuration class.
+    String[] selectImports(AnnotationMetadata importingClassMetadata);
+    根据AnnotationMetadata,也就是标注该@Import的类，将selectImports返回的类的名称，注入到ioc容器中
+* */
+//@Import(value = {Book.class, MyImportSelector.class})
+/*
+* ImportBeanDefinitionRegistrar ,可以手动注册bean到ioc容器中
+* */
+@Import(value = {Book.class, MyImportSelector.class, MyImportBeanDefinitionRegistrar.class})
 public class SpringConfig {
 
     @Bean
@@ -82,6 +96,14 @@ public class SpringConfig {
     @Bean("linus")
     public Person linux(){
         return new Person("linus",50);
+    }
+
+    // 使用FactoryBean注册组件，FactoryBean 是一个工厂bean
+    // 注入工厂bean，默认会调用工厂bean的getObject()，将方法的返回值注入到ioc容器中去。
+
+    @Bean
+    public RedFactoryBean redFactoryBean(){
+        return new RedFactoryBean();
     }
 
 }
