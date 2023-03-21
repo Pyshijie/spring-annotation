@@ -77,7 +77,7 @@ public class SpringConfig {
     @Lazy // 懒加载注解
     public Person person(){
         System.out.println("创建了person bean...");
-        return new Person("lisi",23);
+        return new Person("lisi",23,"小李四");
     }
 
     // @Conditional 有条件的注册bean到ioc容器中
@@ -89,13 +89,13 @@ public class SpringConfig {
     @Bean("bill")
     @Conditional(value = {WindowsCondition.class})
     public Person windows(){
-        return  new Person("bill",64);
+        return  new Person("bill",64,"bill");
     }
 
     @Conditional(value = {LinuxCondition.class})
     @Bean("linus")
     public Person linux(){
-        return new Person("linus",50);
+        return new Person("linus",50,"linus");
     }
 
     // 使用FactoryBean注册组件，FactoryBean 是一个工厂bean

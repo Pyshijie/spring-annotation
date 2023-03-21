@@ -1,5 +1,9 @@
 package org.example.entity;
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
 import java.util.Date;
 
 @SuppressWarnings("all")
@@ -11,7 +15,9 @@ import java.util.Date;
  *@Description: TODO
  *@Version: 1.0
  */
-public class Book {
+public class Book implements ApplicationContextAware {
+
+    private ApplicationContext applicationContext;
     private String bookName;
     private String author;
     private Double price;
@@ -56,5 +62,10 @@ public class Book {
                 ", author='" + author + '\'' +
                 ", price=" + price +
                 '}';
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }

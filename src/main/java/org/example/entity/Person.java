@@ -1,5 +1,9 @@
 package org.example.entity;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+
 @SuppressWarnings("all")
 /**
  *@BelongsProject: spring-annotation
@@ -9,14 +13,27 @@ package org.example.entity;
  *@Description: TODO
  *@Version: 1.0
  */
+@PropertySource(value = {"classpath:/person.properties"},encoding = "UTF-8")
+@Component
 public class Person {
 
+    /*
+    * @Value注解支持一下形式的value值
+    * 1.基本数据类型
+    * 2.SPEL表达式 #{SPEL}
+    * 3.peoperties文件获取值 ${属性}
+    * */
+    @Value("张三")
     private String name;
+    @Value("#{20 - 2}")
     private Integer age;
 
-    public Person(String name, Integer age) {
+    @Value("${person.nikeName}")
+    private String nikeName;
+    public Person(String name, Integer age,String nikeName) {
         this.name = name;
         this.age = age;
+        this.nikeName = nikeName;
     }
 
     public Person() {
@@ -38,11 +55,20 @@ public class Person {
         this.age = age;
     }
 
+    public String getNikeName() {
+        return nikeName;
+    }
+
+    public void setNikeName(String nikeName) {
+        this.nikeName = nikeName;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
+                ", nikeName='" + nikeName + '\'' +
                 '}';
     }
 }
