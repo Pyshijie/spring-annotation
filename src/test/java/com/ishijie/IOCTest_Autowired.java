@@ -2,6 +2,7 @@ package com.ishijie;
 
 import org.example.config.SpringConfigOfAutoWired;
 import org.example.dao.PersonDao;
+import org.example.entity.Boss;
 import org.example.service.PersonService;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -28,6 +29,14 @@ public class IOCTest_Autowired {
         PersonDao bean1 = (PersonDao) applicationContext.getBean("personDao");
         System.out.println(bean1);
         System.out.println(bean1.hashCode());
+    }
+
+    @Test
+    public void test02(){
+        Boss bean = applicationContext.getBean(Boss.class);
+        System.out.println(bean);
+        Object car = applicationContext.getBean("car");
+        System.out.println(car);
     }
 
 }

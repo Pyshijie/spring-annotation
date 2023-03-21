@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  *@Description: TODO
  *@Version: 1.0
  */
-@Component
+//@Component
 public class MyBeanPostProcessor implements BeanPostProcessor {
 
     @Override

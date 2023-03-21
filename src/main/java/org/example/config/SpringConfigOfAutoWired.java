@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan(basePackages = {
-        "org.example.controller","org.example.dao","org.example.service"
+        /*"org.example.controller","org.example.dao","org.example.service",*/"org.example.entity"
 })
 public class SpringConfigOfAutoWired {
 
@@ -39,6 +39,13 @@ public class SpringConfigOfAutoWired {
     *   8. @Autowired 是 Spring管理的   @Resource和@Inject 是 java的规范
     *
     *   9. 日常开发推荐使用@AutoWired 和 @Qualifier 结合使用
+    *   @Target({ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+    *   @AutoWired 可以标注在构造器,方法,参数,字段上
+    *   1. 标注在构造器上，那么会使用该构造器进行初始化，而且构造器中的参数是直接从IOC容器中获取的
+    *      如果只有一个有参构造器，那么@AutoWired 可以省略不写，默认也会使用有参构造器进行创建对象
+    *   2. 标注在方法上，比如set方法上，那么会在构造器创建对象后，自动调用该方法，该方法的参数也是直接从IOC容器中获取
+    *   3. 标注在参数上，那么就表名该参数直接从IOC容器中获取
+    *   4. 字段上，正常情况的注入.
     * */
 
     @Bean
